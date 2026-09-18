@@ -37,13 +37,13 @@ function switchKit(kitId) {
     renderLeaderboards();
 }
 
-// 2. База данных
+// 2. База данных: Заменён beast на sword
 const playersData = {
     overall: [
         { rank: 1, name: "waerqs", points: 60, region: "RU", tiers: ["HT1"] },
         { rank: 2, name: "prom1seee_", points: 60, region: "RU", tiers: ["HT1"] }
     ],
-    beast: [
+    sword: [
         { rank: 1, name: "waerqs", points: 60, region: "RU", tiers: ["HT1"] },
         { rank: 2, name: "prom1seee_", points: 60, region: "RU", tiers: ["HT1"] }
     ]
