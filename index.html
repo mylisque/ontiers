@@ -13,7 +13,6 @@
         }
 
         body {
-            /* Темно-оранжевый с легким переливанием в черный вниз */
             background: linear-gradient(180deg, #241103 0%, #140a03 40%, #070301 100%);
             color: #e0e0e0;
             min-height: 100vh;
@@ -64,7 +63,6 @@
             color: #ff7b25;
         }
 
-        /* Меню подразделов для каждого кита с поддержкой горизонтальной прокрутки */
         .kits-nav {
             display: flex;
             gap: 8px;
@@ -82,7 +80,6 @@
             border-radius: 10px;
         }
 
-        /* Обновленные стили вкладок для выравнивания иконок с текстом */
         .kit-tab {
             background: rgba(35, 25, 20, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -97,14 +94,17 @@
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px; /* Отступ между эмодзи и текстом */
+            gap: 8px;
         }
 
-        /* Стиль для самих эмодзи-иконок */
-        .kit-icon {
-            font-size: 16px;
-            filter: grayscale(30%); /* Легкое приглушение цвета под стиль сайта */
-            transition: filter 0.3s ease;
+        /* Новые стили для отображения 3D картинок Minecraft */
+        .kit-img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            image-rendering: pixelated; /* Сохраняет четкость пикселей майнкрафта */
+            filter: grayscale(40%) brightness(80%);
+            transition: all 0.3s ease;
         }
 
         .kit-tab:hover {
@@ -112,8 +112,9 @@
             color: #fff;
         }
         
-        .kit-tab:hover .kit-icon {
-            filter: grayscale(0%); /* При наведении иконка становится ярче */
+        .kit-tab:hover .kit-img {
+            filter: grayscale(0%) brightness(100%);
+            transform: scale(1.1);
         }
 
         .kit-tab.active {
@@ -123,11 +124,10 @@
             box-shadow: 0 0 12px rgba(255, 123, 37, 0.4);
         }
 
-        .kit-tab.active .kit-icon {
-            filter: grayscale(0%);
+        .kit-tab.active .kit-img {
+            filter: grayscale(0%) brightness(100%);
         }
 
-        /* Поле поиска игроков */
         .search-container {
             margin-bottom: 25px;
             position: relative;
@@ -154,7 +154,6 @@
             color: #666;
         }
 
-        /* Анимация плавного появления таблиц */
         .leaderboard-section {
             display: none;
             opacity: 0;
@@ -238,12 +237,6 @@
             font-size: 15px;
         }
 
-        .player-info .title {
-            font-size: 11px;
-            color: #888;
-            margin-top: 2px;
-        }
-
         .region-badge {
             display: inline-block;
             padding: 4px 8px;
@@ -252,7 +245,6 @@
             font-weight: 700;
         }
 
-        /* Зеленый цвет для региона RU */
         .region-ru { 
             background: rgba(46, 204, 113, 0.15); 
             color: #2ecc71; 
@@ -274,8 +266,6 @@
         }
         
         .tier-ht1 { color: #ff4757; border-color: rgba(255, 71, 87, 0.3); }
-        .tier-lt1 { color: #ffa502; border-color: rgba(255, 165, 2, 0.3); }
-        .tier-ht2 { color: #1e90ff; border-color: rgba(30, 144, 255, 0.3); }
     </style>
 </head>
 <body>
@@ -290,18 +280,18 @@
         </div>
     </header>
 
-    <!-- Вкладки с добавленными эмодзи-иконками под каждый режим -->
+    <!-- Вкладки с подключенными HD текстурами предметов Minecraft -->
     <div class="kits-nav">
-        <div class="kit-tab active" onclick="switchKit('overall')"><span class="kit-icon">🏆</span>Overall</div>
-        <div class="kit-tab" onclick="switchKit('sword')"><span class="kit-icon">⚔️</span>Sword</div>
-        <div class="kit-tab" onclick="switchKit('vanilla')"><span class="kit-icon">📦</span>Vanilla</div>
-        <div class="kit-tab" onclick="switchKit('mace')"><span class="kit-icon">🔨</span>Mace</div>
-        <div class="kit-tab" onclick="switchKit('nethop')"><span class="kit-icon">👑</span>NethOP</div>
-        <div class="kit-tab" onclick="switchKit('nethpot')"><span class="kit-icon">🧪</span>NethPot</div>
-        <div class="kit-tab" onclick="switchKit('pot')"><span class="kit-icon">⚗️</span>Pot</div>
-        <div class="kit-tab" onclick="switchKit('uhc')"><span class="kit-icon">❤️</span>UHC</div>
-        <div class="kit-tab" onclick="switchKit('axe')"><span class="kit-icon">🪓</span>Axe</div>
-        <div class="kit-tab" onclick="switchKit('smp')"><span class="kit-icon">🌍</span>SMP</div>
+        <div class="kit-tab active" onclick="switchKit('overall')"><img src="https://githubusercontent.com" class="kit-img">Overall</div>
+        <div class="kit-tab" onclick="switchKit('sword')"><img src="https://minecraftchoices.com" class="kit-img">Sword</div>
+        <div class="kit-tab" onclick="switchKit('vanilla')"><img src="https://minecraftchoices.com" class="kit-img">Vanilla</div>
+        <div class="kit-tab" onclick="switchKit('mace')"><img src="https://minecraftchoices.com" class="kit-img">Mace</div>
+        <div class="kit-tab" onclick="switchKit('nethop')"><img src="https://minecraftchoices.com" class="kit-img">NethOP</div>
+        <div class="kit-tab" onclick="switchKit('nethpot')"><img src="https://minecraftchoices.com" class="kit-img">NethPot</div>
+        <div class="kit-tab" onclick="switchKit('pot')"><img src="https://minecraftchoices.com" class="kit-img">Pot</div>
+        <div class="kit-tab" onclick="switchKit('uhc')"><img src="https://minecraftchoices.com" class="kit-img">UHC</div>
+        <div class="kit-tab" onclick="switchKit('axe')"><img src="https://minecraftchoices.com" class="kit-img">Axe</div>
+        <div class="kit-tab" onclick="switchKit('smp')"><img src="https://minecraftchoices.com" class="kit-img">SMP</div>
     </div>
 
     <!-- Инпут поиска -->
@@ -329,5 +319,4 @@
         </div>
     </div>
 
-    <!-- Заглушки для остальных подразделов -->
-    <div id="vanilla" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Vanilla...</p></div>
+    <!-- Заглушки для всех остальных подразделов -->
