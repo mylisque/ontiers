@@ -42,13 +42,7 @@ const playersData = {
         { rank: 1, name: "waerqs", points: 60, region: "RU", tiers: ["HT1"] },
         { rank: 2, name: "prom1seee_", points: 60, region: "RU", tiers: ["HT1"] }
     ],
-    vanilla: [], 
-    mace: [], 
-    nethpot: [], 
-    pot: [], 
-    uhc: [], 
-    axe: [], 
-    smp: []
+    vanilla: [], mace: [], nethpot: [], pot: [], uhc: [], axe: [], smp: []
 };
 
 function renderLeaderboards(filterText = '') {
