@@ -64,7 +64,7 @@
             color: #ff7b25;
         }
 
-        /* Меню подразделов для каждого кита */
+        /* Меню подразделов для каждого кита с поддержкой горизонтальной прокрутки */
         .kits-nav {
             display: flex;
             gap: 8px;
@@ -72,6 +72,14 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .kits-nav::-webkit-scrollbar {
+            height: 4px;
+        }
+        .kits-nav::-webkit-scrollbar-thumb {
+            background: #ff7b25;
+            border-radius: 10px;
         }
 
         .kit-tab {
@@ -225,6 +233,7 @@
             font-weight: 700;
         }
 
+        /* Зеленый цвет для региона RU */
         .region-ru { 
             background: rgba(46, 204, 113, 0.15); 
             color: #2ecc71; 
@@ -258,17 +267,22 @@
         <div class="nav-links">
             <a href="#">Главная</a>
             <a href="#">Рейтинги</a>
-            <!-- Добавлена ваша прямая ссылка на Дискорд OnTiers -->
-            <a href="https://discord.gg/MzFdJthgW" target="_blank" rel="noopener noreferrer">Дискорд</a>
+            <a href="https://discord.gg" target="_blank" rel="noopener noreferrer">Дискорд</a>
         </div>
     </header>
 
+    <!-- Полный набор ваших новых подразделов (китов) -->
     <div class="kits-nav">
         <div class="kit-tab active" onclick="switchKit('overall')">Overall</div>
-        <div class="kit-tab" onclick="switchKit('beast')">Beast</div>
+        <div class="kit-tab" onclick="switchKit('sword')">Sword</div>
         <div class="kit-tab" onclick="switchKit('vanilla')">Vanilla</div>
-        <div class="kit-tab" onclick="switchKit('npot')">NPot</div>
-        <div class="kit-tab" onclick="switchKit('dpot')">DPot</div>
+        <div class="kit-tab" onclick="switchKit('mace')">Mace</div>
+        <div class="kit-tab" onclick="switchKit('nethop')">NethOP</div>
+        <div class="kit-tab" onclick="switchKit('nethpot')">NethPot</div>
+        <div class="kit-tab" onclick="switchKit('pot')">Pot</div>
+        <div class="kit-tab" onclick="switchKit('uhc')">UHC</div>
+        <div class="kit-tab" onclick="switchKit('axe')">Axe</div>
+        <div class="kit-tab" onclick="switchKit('smp')">SMP</div>
     </div>
 
     <!-- Инпут поиска -->
@@ -286,21 +300,22 @@
         </div>
     </div>
 
-    <!-- Раздел: BEAST -->
-    <div id="beast" class="leaderboard-section">
+    <!-- Раздел: SWORD -->
+    <div id="sword" class="leaderboard-section">
         <div class="table-responsive">
             <table>
-                <thead><tr><th>Ранг</th><th>Игрок (Beast)</th><th>Регион</th><th>Тиры</th></tr></thead>
+                <thead><tr><th>Ранг</th><th>Игрок (Sword)</th><th>Регион</th><th>Тиры</th></tr></thead>
                 <tbody></tbody>
             </table>
         </div>
     </div>
 
+    <!-- Текстовые заглушки для всех новых подразделов -->
     <div id="vanilla" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Vanilla...</p></div>
-    <div id="npot" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела NPot...</p></div>
-    <div id="dpot" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела DPot...</p></div>
-</div>
-
-<script src="sait.js"></script>
-</body>
-</html>
+    <div id="mace" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Mace...</p></div>
+    <div id="nethop" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела NethOP...</p></div>
+    <div id="nethpot" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела NethPot...</p></div>
+    <div id="pot" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Pot...</p></div>
+    <div id="uhc" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела UHC...</p></div>
+    <div id="axe" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Axe...</p></div>
+    <div id="smp" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела SMP...</p></div>
