@@ -13,6 +13,7 @@
         }
 
         body {
+            /* Темно-оранжевый с легким переливанием в черный вниз */
             background: linear-gradient(180deg, #241103 0%, #140a03 40%, #070301 100%);
             color: #e0e0e0;
             min-height: 100vh;
@@ -63,47 +64,43 @@
             color: #ff7b25;
         }
 
+        /* Обновленное меню: без ползунка, все 10 вкладок умещаются в одну строку */
         .kits-nav {
             display: flex;
-            gap: 8px;
-            overflow-x: auto;
+            justify-content: space-between; /* Равномерно распределяет вкладки по всей ширине */
+            gap: 4px;
+            overflow: hidden; /* Полностью убирает ползунок прокрутки */
             padding-bottom: 10px;
             margin-bottom: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
         }
 
-        .kits-nav::-webkit-scrollbar {
-            height: 4px;
-        }
-        .kits-nav::-webkit-scrollbar-thumb {
-            background: #ff7b25;
-            border-radius: 10px;
-        }
-
+        /* Уменьшенные вкладки, чтобы всё гарантированно влезло */
         .kit-tab {
+            flex: 1; /* Все вкладки будут одинаковой ширины */
+            text-align: center;
+            justify-content: center;
             background: rgba(35, 25, 20, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.05);
             color: #999;
-            padding: 10px 18px;
-            border-radius: 8px;
+            padding: 8px 4px; /* Уменьшенные отступы */
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 11px; /* Уменьшенный шрифт для компактности */
+            font-weight: 700;
             text-transform: uppercase;
             white-space: nowrap;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
         }
 
-        /* Новые стили для отображения 3D картинок Minecraft */
-        .kit-img {
-            width: 20px;
-            height: 20px;
-            object-fit: contain;
-            image-rendering: pixelated; /* Сохраняет четкость пикселей майнкрафта */
-            filter: grayscale(40%) brightness(80%);
+        /* Стильные текстовые эмодзи, которые никогда не сломаются */
+        .kit-icon {
+            font-size: 13px;
+            filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
             transition: all 0.3s ease;
         }
 
@@ -112,20 +109,15 @@
             color: #fff;
         }
         
-        .kit-tab:hover .kit-img {
-            filter: grayscale(0%) brightness(100%);
-            transform: scale(1.1);
+        .kit-tab:hover .kit-icon {
+            transform: scale(1.15);
         }
 
         .kit-tab.active {
             background: #ff7b25;
             color: #fff;
             border-color: #ff7b25;
-            box-shadow: 0 0 12px rgba(255, 123, 37, 0.4);
-        }
-
-        .kit-tab.active .kit-img {
-            filter: grayscale(0%) brightness(100%);
+            box-shadow: 0 0 10px rgba(255, 123, 37, 0.4);
         }
 
         .search-container {
@@ -280,18 +272,18 @@
         </div>
     </header>
 
-    <!-- Вкладки с подключенными HD текстурами предметов Minecraft -->
+    <!-- Компактные вкладки в одну строчку с яркими эмодзи-иконками -->
     <div class="kits-nav">
-        <div class="kit-tab active" onclick="switchKit('overall')"><img src="https://githubusercontent.com" class="kit-img">Overall</div>
-        <div class="kit-tab" onclick="switchKit('sword')"><img src="https://minecraftchoices.com" class="kit-img">Sword</div>
-        <div class="kit-tab" onclick="switchKit('vanilla')"><img src="https://minecraftchoices.com" class="kit-img">Vanilla</div>
-        <div class="kit-tab" onclick="switchKit('mace')"><img src="https://minecraftchoices.com" class="kit-img">Mace</div>
-        <div class="kit-tab" onclick="switchKit('nethop')"><img src="https://minecraftchoices.com" class="kit-img">NethOP</div>
-        <div class="kit-tab" onclick="switchKit('nethpot')"><img src="https://minecraftchoices.com" class="kit-img">NethPot</div>
-        <div class="kit-tab" onclick="switchKit('pot')"><img src="https://minecraftchoices.com" class="kit-img">Pot</div>
-        <div class="kit-tab" onclick="switchKit('uhc')"><img src="https://minecraftchoices.com" class="kit-img">UHC</div>
-        <div class="kit-tab" onclick="switchKit('axe')"><img src="https://minecraftchoices.com" class="kit-img">Axe</div>
-        <div class="kit-tab" onclick="switchKit('smp')"><img src="https://minecraftchoices.com" class="kit-img">SMP</div>
+        <div class="kit-tab active" onclick="switchKit('overall')"><span class="kit-icon">🏆</span>Overall</div>
+        <div class="kit-tab" onclick="switchKit('sword')"><span class="kit-icon">⚔️</span>Sword</div>
+        <div class="kit-tab" onclick="switchKit('vanilla')"><span class="kit-icon">🌱</span>Vanilla</div>
+        <div class="kit-tab" onclick="switchKit('mace')"><span class="kit-icon">🔨</span>Mace</div>
+        <div class="kit-tab" onclick="switchKit('nethop')"><span class="kit-icon">👑</span>NethOP</div>
+        <div class="kit-tab" onclick="switchKit('nethpot')"><span class="kit-icon">🪖</span>NethPot</div>
+        <div class="kit-tab" onclick="switchKit('pot')"><span class="kit-icon">🧪</span>Pot</div>
+        <div class="kit-tab" onclick="switchKit('uhc')"><span class="kit-icon">❤️</span>UHC</div>
+        <div class="kit-tab" onclick="switchKit('axe')"><span class="kit-icon">🪓</span>Axe</div>
+        <div class="kit-tab" onclick="switchKit('smp')"><span class="kit-icon">🛡️</span>SMP</div>
     </div>
 
     <!-- Инпут поиска -->
@@ -320,3 +312,6 @@
     </div>
 
     <!-- Заглушки для всех остальных подразделов -->
+    <div id="vanilla" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Vanilla...</p></div>
+    <div id="mace" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Mace...</p></div>
+    <div id="nethop" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела NethOP...</p></div>
