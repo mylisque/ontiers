@@ -82,6 +82,7 @@
             border-radius: 10px;
         }
 
+        /* Обновленные стили вкладок для выравнивания иконок с текстом */
         .kit-tab {
             background: rgba(35, 25, 20, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -94,11 +95,25 @@
             text-transform: uppercase;
             white-space: nowrap;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Отступ между эмодзи и текстом */
+        }
+
+        /* Стиль для самих эмодзи-иконок */
+        .kit-icon {
+            font-size: 16px;
+            filter: grayscale(30%); /* Легкое приглушение цвета под стиль сайта */
+            transition: filter 0.3s ease;
         }
 
         .kit-tab:hover {
             border-color: rgba(255, 123, 37, 0.4);
             color: #fff;
+        }
+        
+        .kit-tab:hover .kit-icon {
+            filter: grayscale(0%); /* При наведении иконка становится ярче */
         }
 
         .kit-tab.active {
@@ -106,6 +121,10 @@
             color: #fff;
             border-color: #ff7b25;
             box-shadow: 0 0 12px rgba(255, 123, 37, 0.4);
+        }
+
+        .kit-tab.active .kit-icon {
+            filter: grayscale(0%);
         }
 
         /* Поле поиска игроков */
@@ -271,18 +290,18 @@
         </div>
     </header>
 
-    <!-- Полный набор ваших новых подразделов (китов) -->
+    <!-- Вкладки с добавленными эмодзи-иконками под каждый режим -->
     <div class="kits-nav">
-        <div class="kit-tab active" onclick="switchKit('overall')">Overall</div>
-        <div class="kit-tab" onclick="switchKit('sword')">Sword</div>
-        <div class="kit-tab" onclick="switchKit('vanilla')">Vanilla</div>
-        <div class="kit-tab" onclick="switchKit('mace')">Mace</div>
-        <div class="kit-tab" onclick="switchKit('nethop')">NethOP</div>
-        <div class="kit-tab" onclick="switchKit('nethpot')">NethPot</div>
-        <div class="kit-tab" onclick="switchKit('pot')">Pot</div>
-        <div class="kit-tab" onclick="switchKit('uhc')">UHC</div>
-        <div class="kit-tab" onclick="switchKit('axe')">Axe</div>
-        <div class="kit-tab" onclick="switchKit('smp')">SMP</div>
+        <div class="kit-tab active" onclick="switchKit('overall')"><span class="kit-icon">🏆</span>Overall</div>
+        <div class="kit-tab" onclick="switchKit('sword')"><span class="kit-icon">⚔️</span>Sword</div>
+        <div class="kit-tab" onclick="switchKit('vanilla')"><span class="kit-icon">📦</span>Vanilla</div>
+        <div class="kit-tab" onclick="switchKit('mace')"><span class="kit-icon">🔨</span>Mace</div>
+        <div class="kit-tab" onclick="switchKit('nethop')"><span class="kit-icon">👑</span>NethOP</div>
+        <div class="kit-tab" onclick="switchKit('nethpot')"><span class="kit-icon">🧪</span>NethPot</div>
+        <div class="kit-tab" onclick="switchKit('pot')"><span class="kit-icon">⚗️</span>Pot</div>
+        <div class="kit-tab" onclick="switchKit('uhc')"><span class="kit-icon">❤️</span>UHC</div>
+        <div class="kit-tab" onclick="switchKit('axe')"><span class="kit-icon">🪓</span>Axe</div>
+        <div class="kit-tab" onclick="switchKit('smp')"><span class="kit-icon">🌍</span>SMP</div>
     </div>
 
     <!-- Инпут поиска -->
@@ -310,12 +329,5 @@
         </div>
     </div>
 
-    <!-- Текстовые заглушки для всех новых подразделов -->
+    <!-- Заглушки для остальных подразделов -->
     <div id="vanilla" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Vanilla...</p></div>
-    <div id="mace" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Mace...</p></div>
-    <div id="nethop" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела NethOP...</p></div>
-    <div id="nethpot" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела NethPot...</p></div>
-    <div id="pot" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Pot...</p></div>
-    <div id="uhc" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела UHC...</p></div>
-    <div id="axe" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Axe...</p></div>
-    <div id="smp" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела SMP...</p></div>
