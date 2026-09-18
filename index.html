@@ -1,106 +1,317 @@
-let currentKit = 'overall';
-
-function switchKit(kitId) {
-    currentKit = kitId;
-    
-    const searchInput = document.getElementById('playerSearch');
-    if (searchInput) searchInput.value = '';
-
-    const sections = document.querySelectorAll('.leaderboard-section');
-    const tabs = document.querySelectorAll('.kit-tab');
-
-    sections.forEach(sec => {
-        sec.classList.remove('active');
-        sec.style.opacity = '0';
-        sec.style.transform = 'translateY(10px)';
-    });
-    
-    tabs.forEach(tab => tab.classList.remove('active'));
-    
-    const targetSection = document.getElementById(kitId);
-    if (targetSection) {
-        targetSection.classList.add('active');
-        setTimeout(() => {
-            targetSection.style.opacity = '1';
-            targetSection.style.transform = 'translateY(0)';
-        }, 50);
-    }
-
-    if (event && event.currentTarget) {
-        event.currentTarget.classList.add('active');
-    }
-
-    renderLeaderboards();
-}
-
-const playersData = {
-    overall: [
-        { rank: 1, name: "waerqs", points: 60, region: "RU", tiers: ["HT1"] },
-        { rank: 2, name: "prom1seee_", points: 60, region: "RU", tiers: ["HT1"] }
-    ],
-    sword: [
-        { rank: 1, name: "waerqs", points: 60, region: "RU", tiers: ["HT1"] },
-        { rank: 2, name: "prom1seee_", points: 60, region: "RU", tiers: ["HT1"] }
-    ],
-    vanilla: [], 
-    mace: [], 
-    nethpot: [], 
-    pot: [], 
-    uhc: [], 
-    axe: [], 
-    smp: []
-};
-
-function renderLeaderboards(filterText = '') {
-    Object.keys(playersData).forEach(kit => {
-        const tbody = document.querySelector(`#${kit} tbody`);
-        if (!tbody) return;
-
-        tbody.innerHTML = ''; 
-
-        const filteredPlayers = playersData[kit].filter(player => 
-            player.name.toLowerCase().includes(filterText.toLowerCase())
-        );
-
-        if (filteredPlayers.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 20px; color: #666;">Игрок не найден</td></tr>`;
-            return;
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnTiers - PvP Leaderboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        filteredPlayers.forEach(player => {
-            const tr = document.createElement('tr');
-            const TiersHtml = player.tiers.map(t => `<span class="tier-tag tier-${t.toLowerCase()}">${t}</span>`).join('');
-            const avatarLetters = player.name.substring(0, 2).toUpperCase();
+        body {
+            background: linear-gradient(180deg, #241103 0%, #140a03 40%, #070301 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-            tr.innerHTML = `
-                <td class="rank rank-${player.rank}">${player.rank}.</td>
-                <td>
-                    <div class="player-cell">
-                        <div class="avatar">${avatarLetters}</div>
-                        <div class="player-info">
-                            <div class="name">${player.name}</div>
-                            <div class="title">${player.points} points</div>
-                        </div>
-                    </div>
-                </td>
-                <td><span class="region-badge region-${player.region.toLowerCase()}">${player.region}</span></td>
-                <td><div class="tiers-container">${TiersHtml}</div></td>
-            `;
-            tbody.appendChild(tr);
-        });
-    });
-}
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: rgba(20, 13, 9, 0.6);
+            border: 1px solid rgba(224, 106, 32, 0.15);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
 
-function handleSearch() {
-    const query = document.getElementById('playerSearch').value;
-    renderLeaderboards(query);
-}
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(224, 106, 32, 0.2);
+            padding-bottom: 15px;
+        }
 
-window.onload = () => {
-    renderLeaderboards();
-    const activeSection = document.querySelector('.leaderboard-section.active');
-    if(activeSection) {
-        activeSection.style.opacity = '1';
-        activeSection.style.transform = 'translateY(0)';
-    }
-};
+        .logo {
+            font-size: 26px;
+            font-weight: 900;
+            color: #ff7b25;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #ffffff;
+        }
+
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff7b25;
+        }
+
+        /* Умная строка подразделов: все 9 вкладок компактно встают в ряд */
+        .kits-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 6px;
+            overflow: hidden;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
+        }
+
+        .kit-tab {
+            flex: 1;
+            text-align: center;
+            justify-content: center;
+            background: rgba(35, 25, 20, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #999;
+            padding: 10px 4px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .kit-icon {
+            font-size: 14px;
+            filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+            transition: all 0.3s ease;
+        }
+
+        .kit-tab:hover {
+            border-color: rgba(255, 123, 37, 0.4);
+            color: #fff;
+        }
+        
+        .kit-tab:hover .kit-icon {
+            transform: scale(1.15);
+        }
+
+        .kit-tab.active {
+            background: #ff7b25;
+            color: #fff;
+            border-color: #ff7b25;
+            box-shadow: 0 0 10px rgba(255, 123, 37, 0.4);
+        }
+
+        .search-container {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(20, 13, 9, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #ff7b25;
+            box-shadow: 0 0 10px rgba(255, 123, 37, 0.2);
+        }
+
+        .search-input::placeholder {
+            color: #666;
+        }
+
+        .leaderboard-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .leaderboard-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            padding: 12px 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.25s ease;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 123, 37, 0.05);
+            box-shadow: inset 0 0 15px rgba(255, 123, 37, 0.1);
+        }
+
+        td {
+            padding: 14px 15px;
+            vertical-align: middle;
+        }
+
+        .rank {
+            font-weight: 800;
+            font-size: 16px;
+            width: 50px;
+        }
+        
+        .rank-1 { color: #ffb834; }
+        .rank-2 { color: #b1b1b1; }
+
+        .player-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            background: #2a1d15;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #ff7b25;
+            border: 1px solid rgba(255, 123, 37, 0.2);
+            text-transform: uppercase;
+        }
+
+        .player-info .name {
+            font-weight: 700;
+            color: #fff;
+            font-size: 15px;
+        }
+
+        .region-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .region-ru { 
+            background: rgba(46, 204, 113, 0.15); 
+            color: #2ecc71; 
+            border: 1px solid rgba(46, 204, 113, 0.3); 
+        }
+
+        .tiers-container {
+            display: flex;
+            gap: 6px;
+        }
+
+        .tier-tag {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 6px;
+            border-radius: 4px;
+            background: #221812;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .tier-ht1 { color: #ff4757; border-color: rgba(255, 71, 87, 0.3); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">ON<span>Tiers</span></div>
+        <div class="nav-links">
+            <a href="#">Главная</a>
+            <a href="#">Рейтинги</a>
+            <a href="https://discord.gg" target="_blank" rel="noopener noreferrer">Дискорд</a>
+        </div>
+    </header>
+
+    <div class="kits-nav">
+        <div class="kit-tab active" onclick="switchKit('overall')"><span class="kit-icon">🏆</span>Overall</div>
+        <div class="kit-tab" onclick="switchKit('sword')"><span class="kit-icon">⚔️</span>Sword</div>
+        <div class="kit-tab" onclick="switchKit('vanilla')"><span class="kit-icon">🌱</span>Vanilla</div>
+        <div class="kit-tab" onclick="switchKit('mace')"><span class="kit-icon">🔨</span>Mace</div>
+        <div class="kit-tab" onclick="switchKit('nethpot')"><span class="kit-icon">🪖</span>NethPot</div>
+        <div class="kit-tab" onclick="switchKit('pot')"><span class="kit-icon">🧪</span>Pot</div>
+        <div class="kit-tab" onclick="switchKit('uhc')"><span class="kit-icon">❤️</span>UHC</div>
+        <div class="kit-tab" onclick="switchKit('axe')"><span class="kit-icon">🪓</span>Axe</div>
+        <div class="kit-tab" onclick="switchKit('smp')"><span class="kit-icon">🛡️</span>SMP</div>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="playerSearch" class="search-input" placeholder="Поиск игрока по никнейму..." oninput="handleSearch()">
+    </div>
+
+    <div id="overall" class="leaderboard-section active">
+        <div class="table-responsive">
+            <table>
+                <thead><tr><th>Ранг</th><th>Игрок</th><th>Регион</th><th>Тиры</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="sword" class="leaderboard-section">
+        <div class="table-responsive">
+            <table>
+                <thead><tr><th>Ранг</th><th>Игрок (Sword)</th><th>Регион</th><th>Тиры</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="vanilla" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Vanilla...</p></div>
+    <div id="mace" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Mace...</p></div>
+    <div id="nethpot" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела NethPot...</p></div>
+    <div id="pot" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Pot...</p></div>
+    <div id="uhc" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела UHC...</p></div>
+    <div id="axe" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела Axe...</p></div>
+    <div id="smp" class="leaderboard-section"><p style="padding: 20px; color: #666;">Здесь будут лидеры подраздела SMP...</p></div>
+</div>
+
+<script src="sait.js"></script>
+</body>
+</html>
